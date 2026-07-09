@@ -1,55 +1,28 @@
-# AI Document Assistant — Setup
+# AI-Driven Development (AIDD) Guide
 
-## First-time setup
+Personal reference for setting up AI-Driven Development on any project —
+one canonical rules file per project, read the same way by OpenCode, Codex,
+Claude Code, and Cursor, with risky actions (commit, push, migrations)
+enforced rather than just requested.
 
-### Backend
-cd backend
-dotnet restore
-dotnet build
+**Start here → [AIDD-Master-Guide.md](./AIDD-Master-Guide.md)**
 
-# Get a free Gemini API key: https://aistudio.google.com/app/apikey (no credit card needed)
+## What's inside the guide
 
-# Local secrets (never go in appsettings.json — see AGENTS.md):
-cd src/AIDocAssistant.Api
-dotnet user-secrets init
-dotnet user-secrets set "Gemini:ApiKey" "<your Gemini API key>"
-dotnet user-secrets set "ConnectionStrings:DefaultConnection" "<your local connection string>"
+- The AIDD workflow loop (Plan → Implement → Validate → Commit/Push → Conflict-check)
+- Copy-paste templates: `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/main.mdc`, `opencode.json`
+- Global `~/.claude/CLAUDE.md` template (personal preferences, set up once, applies everywhere)
+- Monorepo variant (frontend + backend split)
+- A new-project checklist (10-15 min per project)
 
-dotnet run
-# Swagger UI at https://localhost:<port>/swagger — try the embed/chat flow once
-# IDocumentRepository is wired up (see "What's stubbed" below).
+## How to use this
 
-### Frontend
-cd frontend
-npm install
-cp .env.local.example .env.local
-npm run dev
+For any new project:
 
-## What's stubbed vs what you need to build
+1. Open `AIDD-Master-Guide.md`
+2. Jump to the checklist (Section 8)
+3. Copy the templates, fill in the blanks for that project
+4. Commit the resulting files to that project's own repo
 
-- Backend: IEmbeddingService and ICompletionService are now IMPLEMENTED against
-  Gemini (free tier — see GeminiEmbeddingService.cs / GeminiCompletionService.cs
-  in Infrastructure/). Swap providers later by changing only the DI registration
-  in Program.cs — nothing in Application/Api needs to change.
-- EF Core DbContext is still commented out until you
-  `dotnet add package Microsoft.EntityFrameworkCore.SqlServer`.
-- DocumentsController is still a stub — needs to call IDocumentRepository once
-  EF Core is wired up.
-- Frontend: page shell, API client, and empty feature components are stubbed.
-  ChatWindow and DocumentList need actual implementation.
-- No auth wired up yet on either side — add before going further, since
-  WorkspaceId scoping (see AGENTS.md) depends on knowing who's calling.
-- DESIGN.md has placeholder [TBD] values for colors/fonts — lock these in before
-  building real UI components.
-
-## Provider notes
-
-Using Gemini (gemini-embedding-001 + gemini-flash-latest) for embeddings/chat —
-chosen for the genuinely free tier during prototyping (1,500 requests/day, no
-credit card). Free-tier traffic may be used by Google to improve their models —
-switch to a paid Gemini key (or another provider) before sending real customer
-documents through this. See IEmbeddingService/ICompletionService in Application/
-if you want to swap providers later — it's a contained change.
-
-See AGENTS.md for the full rules this project follows.
-See DESIGN.md for the design token system this project follows.
+This repo itself doesn't get copied into a project — only the templates inside
+the guide do.
