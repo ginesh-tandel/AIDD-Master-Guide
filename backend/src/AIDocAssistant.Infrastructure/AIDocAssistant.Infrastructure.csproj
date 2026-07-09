@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AIDocAssistant.Application\AIDocAssistant.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Add packages after `dotnet restore`, e.g.: -->
+    <!-- Microsoft.EntityFrameworkCore.SqlServer -->
+    <!-- Azure.AI.OpenAI (or your chosen embedding/LLM provider SDK) -->
+  </ItemGroup>
+</Project>

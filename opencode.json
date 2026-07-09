@@ -1,0 +1,69 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  "instructions": [
+    "AGENTS.md"
+  ],
+
+  "permission": {
+    "edit": "allow",
+
+    "bash": {
+      "*": "ask",
+
+      "dotnet build*": "allow",
+      "dotnet test*": "allow",
+      "dotnet restore*": "allow",
+
+      "npm run build*": "allow",
+      "npm run lint*": "allow",
+      "npm run test*": "allow",
+      "npm install*": "ask",
+
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git add*": "allow",
+
+      "git commit*": "ask",
+      "git push*": "ask",
+      "git push --force*": "deny",
+      "git push -f*": "deny",
+
+      "dotnet ef migrations add*": "ask",
+      "dotnet ef migrations remove*": "ask",
+      "dotnet ef database update*": "ask",
+
+      "rm -rf*": "deny",
+      "sudo *": "deny"
+    },
+
+    "webfetch": "ask"
+  },
+
+  "agent": {
+    "build": {
+      "permission": {
+        "bash": {
+          "*": "ask",
+          "git commit*": "ask",
+          "git push*": "ask",
+          "git push --force*": "deny"
+        }
+      }
+    },
+    "plan": {
+      "mode": "primary",
+      "description": "Analysis and planning only — no file edits, no commits. Use before non-trivial changes per AGENTS.md.",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "deny",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow"
+        }
+      }
+    }
+  }
+}
